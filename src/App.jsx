@@ -1,5 +1,11 @@
+import Header from "./components/Header";
+
 function App() {
-  return <h1 className="text-3xl font-bold underline">React SNEAKERS!</h1>;
+  return (
+    <div className="max-w-5xl mx-auto bg-white h-screen rounded-3xl m-20">
+      <Header />
+    </div>
+  );
 }
 
 export default App;
