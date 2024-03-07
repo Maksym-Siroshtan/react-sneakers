@@ -1,7 +1,23 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 import Header from "./components/Header";
 import CardList from "./components/CardList";
 
 function App() {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      const { data } = await axios.get(
+        "https://8ca1b7098d059351.mokky.dev/items"
+      );
+      setItems(data);
+    };
+
+    fetchItems();
+  }, []);
+
   return (
     <div className="max-w-5xl mx-auto bg-white rounded-3xl m-20">
       <Header />
@@ -18,7 +34,7 @@ function App() {
             />
           </div>
         </div>
-        <CardList />
+        <CardList items={items} />
       </div>
     </div>
   );

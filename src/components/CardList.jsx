@@ -1,11 +1,15 @@
 import Card from "./Card";
-function CardList() {
+function CardList(props) {
   return (
     <ul className="grid grid-cols-4 gap-10">
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+      {props.items.map((item) => (
+        <Card
+          key={item.id}
+          title={item.title}
+          imageUrl={item.imageUrl}
+          price={item.price}
+        />
+      ))}
     </ul>
   );
 }
