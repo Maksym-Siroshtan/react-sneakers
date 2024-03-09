@@ -3,6 +3,7 @@ import axios from "axios";
 
 import Header from "./components/Header";
 import CardList from "./components/CardList";
+import Drawer from "./components/Drawer";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -30,6 +31,8 @@ function App() {
 
   return (
     <div className="max-w-5xl mx-auto bg-white rounded-3xl m-20">
+      <Drawer />
+
       <Header />
 
       <div className="p-12">
