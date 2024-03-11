@@ -8,6 +8,15 @@ import Drawer from "./components/Drawer";
 function App() {
   const [items, setItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const openDrawer = () => {
+    setIsDrawerOpen(true);
+  };
+
+  const closeDrawer = () => {
+    setIsDrawerOpen(false);
+  };
 
   const fetchItems = async () => {
     let title = `*${searchQuery}*`;
@@ -31,9 +40,9 @@ function App() {
 
   return (
     <div className="max-w-5xl mx-auto bg-white rounded-3xl m-20">
-      <Drawer />
+      {isDrawerOpen && <Drawer closeDrawer={closeDrawer} />}
 
-      <Header />
+      <Header openDrawer={openDrawer} />
 
       <div className="p-12">
         <div className="flex items-center justify-between mb-12">

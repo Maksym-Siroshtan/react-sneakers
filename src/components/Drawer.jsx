@@ -1,6 +1,6 @@
 import CartItemList from "./CartItemList";
 
-function Drawer() {
+function Drawer({ closeDrawer }) {
   return (
     <>
       <div className="fixed left-0 top-0 w-full h-full bg-black opacity-40 z-10"></div>
@@ -8,6 +8,7 @@ function Drawer() {
         <div className="flex items-center justify-between mb-7">
           <h2 className="text-2xl font-bold">Кошик</h2>
           <img
+            onClick={closeDrawer}
             src="/close.svg"
             alt="Close"
             className="cursor-pointer transition-all hover:scale-110"

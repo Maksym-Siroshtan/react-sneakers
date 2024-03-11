@@ -1,5 +1,4 @@
-function Card(props) {
-  const { title, imageUrl, price } = props;
+function Card({ title, imageUrl, price }) {
   return (
     <li className="relative border border-gray-200 bg-white rounded-3xl p-7 hover:shadow-xl hover:scale-105 transition-all">
       <img

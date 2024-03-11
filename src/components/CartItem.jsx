@@ -1,6 +1,4 @@
-function CartItem(props) {
-  const { title, imageUrl, price } = props;
-
+function CartItem({ title, imageUrl, price }) {
   return (
     <li className="flex items-center justify-between gap-4 border border-gray-200 bg-white rounded-3xl p-5 overflow-hidden hover:shadow-xl hover:scale-105 transition-all">
       <img src={imageUrl} alt={title} className="w-20" />
