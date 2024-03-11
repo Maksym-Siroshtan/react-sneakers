@@ -1,8 +1,24 @@
-function Card({ title, imageUrl, price }) {
+import { useState } from "react";
+
+function Card(props) {
+  const { id, title, imageUrl, price, onClickToFavorite } = props;
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
+
+  const onClickFavorite = () => {
+    onClickToFavorite({ id, title, imageUrl, price, isFavorite });
+    setIsFavorite(!isFavorite);
+  };
+
+  const onClickAdd = () => {
+    console.log("onClickAdd!");
+    setIsAdded(!isAdded);
+  };
   return (
     <li className="relative border border-gray-200 bg-white rounded-3xl p-7 hover:shadow-xl hover:scale-105 transition-all">
       <img
-        src="/like-1.svg"
+        onClick={onClickFavorite}
+        src={isFavorite ? "/like-2.svg" : "/like-1.svg"}
         alt="Like"
         className="absolute left-7 top-8 cursor-pointer"
       />
@@ -13,7 +29,13 @@ function Card({ title, imageUrl, price }) {
           <p className="text-xs font-medium uppercase text-gray-400">Ціна:</p>
           <b className="text-sm">{price} грн.</b>
         </div>
-        <img src="/plus.svg" alt="Plus" className="cursor-pointer" />
+
+        <img
+          onClick={onClickAdd}
+          src={isAdded ? "/checked.svg" : "/plus.svg"}
+          alt="Plus"
+          className="cursor-pointer"
+        />
       </div>
     </li>
   );

@@ -5,9 +5,8 @@ function CardList(props) {
       {props.items.map((item) => (
         <Card
           key={item.id}
-          title={item.title}
-          imageUrl={item.imageUrl}
-          price={item.price}
+          {...item}
+          onClickToFavorite={props.onClickToFavorite}
         />
       ))}
     </ul>

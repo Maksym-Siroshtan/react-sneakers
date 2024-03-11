@@ -7,6 +7,7 @@ import Drawer from "./components/Drawer";
 
 function App() {
   const [items, setItems] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -16,6 +17,22 @@ function App() {
 
   const closeDrawer = () => {
     setIsDrawerOpen(false);
+  };
+
+  const onClickToFavorite = async (obj) => {
+    const { id: parentId } = obj;
+
+    if (!obj.isFavorite) {
+      await axios.post("https://757ed0bbb74e1c15.mokky.dev/favorites", {
+        parentId,
+      });
+
+      setFavorites([...favorites, obj]);
+    } else {
+      await axios.delete(
+        `https://757ed0bbb74e1c15.mokky.dev/favorites/${obj.id}`
+      );
+    }
   };
 
   const fetchItems = async () => {
@@ -58,7 +75,7 @@ function App() {
             />
           </div>
         </div>
-        <CardList items={items} />
+        <CardList items={items} onClickToFavorite={onClickToFavorite} />
       </div>
     </div>
   );
