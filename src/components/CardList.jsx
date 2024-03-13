@@ -4,7 +4,7 @@ function CardList(props) {
     <ul className="grid grid-cols-4 gap-10">
       {props.items.map((item) => (
         <Card
-          key={item.id}
+          key={item.itemId}
           {...item}
           onClickToFavorite={props.onClickToFavorite}
         />

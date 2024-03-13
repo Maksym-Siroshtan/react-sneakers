@@ -1,13 +1,12 @@
 import { useState } from "react";
 
-function Card(props) {
-  const { id, title, imageUrl, price, onClickToFavorite } = props;
+function Card({ itemId, title, imageUrl, price, onClickToFavorite }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
 
   const onClickFavorite = () => {
-    onClickToFavorite({ id, title, imageUrl, price, isFavorite });
     setIsFavorite(!isFavorite);
+    onClickToFavorite({ itemId, title, imageUrl, price, isFavorite });
   };
 
   const onClickAdd = () => {

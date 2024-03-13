@@ -19,19 +19,23 @@ function App() {
     setIsDrawerOpen(false);
   };
 
-  const onClickToFavorite = async (obj) => {
-    const { id: parentId } = obj;
-
-    if (!obj.isFavorite) {
-      await axios.post("https://757ed0bbb74e1c15.mokky.dev/favorites", {
-        parentId,
-      });
-
-      setFavorites([...favorites, obj]);
-    } else {
-      await axios.delete(
-        `https://757ed0bbb74e1c15.mokky.dev/favorites/${obj.id}`
-      );
+  const onClickToFavorite = async (item) => {
+    try {
+      if (!item.isFavorite) {
+        const { data } = await axios.post(
+          "https://757ed0bbb74e1c15.mokky.dev/favorites",
+          {
+            ...item,
+          }
+        );
+        setFavorites([...favorites, item]);
+      } else {
+        await axios.delete(
+          `https://757ed0bbb74e1c15.mokky.dev/favorites/${item.itemId}`
+        );
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -44,11 +48,41 @@ function App() {
         params: { title },
       }
     );
+
     setItems(data);
   };
 
+  const fetchFavorites = async () => {
+    const { data } = await axios.get(
+      "https://757ed0bbb74e1c15.mokky.dev/favorites"
+    );
+
+    const favoritesItems = items.map((item) => {
+      const favorite = data.some((f) => f.itemId === item.itemId);
+
+      if (favorite) {
+        return {
+          ...item,
+          isFavorite: true,
+        };
+      }
+
+      return {
+        ...item,
+      };
+    });
+
+    console.log(data)
+
+    // setItems([...favoritesItems]);
+    // setFavorites(data);
+  };
+
   useEffect(() => {
-    fetchItems();
+    (async () => {
+      await fetchItems();
+      await fetchFavorites();
+    })();
   }, []);
 
   useEffect(() => {
