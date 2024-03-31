@@ -13,12 +13,12 @@ function Card({
 
   const onClickFavorite = () => {
     setIsFavorite(!isFavorite);
-    onClickToFavorite({ itemId, title, imageUrl, price, isFavorite });
+    onClickToFavorite({ itemId, title, imageUrl, price });
   };
 
   const onClickAdd = () => {
     setIsAdded(!isAdded);
-    onClickToAdd({ itemId, title, imageUrl, price, isFavorite });
+    onClickToAdd({ itemId, title, imageUrl, price });
   };
   return (
     <li className="relative border border-gray-200 bg-white rounded-3xl p-7 hover:shadow-xl hover:scale-105 transition-all">

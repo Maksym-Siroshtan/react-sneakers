@@ -1,6 +1,6 @@
 import CartItemList from "./CartItemList";
 
-function Drawer({ cartItems, closeDrawer }) {
+function Drawer({ cartItems, closeDrawer, onRemoveFromCart }) {
   return (
     <>
       <div className="fixed left-0 top-0 w-full h-full bg-black opacity-40 z-10"></div>
@@ -15,7 +15,10 @@ function Drawer({ cartItems, closeDrawer }) {
           />
         </div>
 
-        <CartItemList cartItems={cartItems} />
+        <CartItemList
+          cartItems={cartItems}
+          onRemoveFromCart={onRemoveFromCart}
+        />
 
         <div>
           <div className="flex items-end gap-1 mb-5">
