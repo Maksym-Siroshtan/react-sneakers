@@ -96,7 +96,13 @@ function App() {
               value={searchQuery}
               type="text"
               placeholder="Пошук..."
-              className="pl-10 py-2 pr-4 outline-none border border-gray-200 rounded-lg overflow-hidden focus:border-gray-600 placeholder:text-xs"
+              className="pl-10 py-2 pr-14 outline-none border border-gray-200 rounded-lg overflow-hidden focus:border-gray-600 placeholder:text-xs"
+            />
+            <img
+              onClick={() => setSearchQuery("")}
+              src="/close.svg"
+              alt="Clear"
+              className="absolute right-3 h-full w-6 cursor-pointer"
             />
           </div>
         </div>
