@@ -7,6 +7,7 @@ import Drawer from "./components/Drawer";
 
 function App() {
   const [items, setItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -39,6 +40,10 @@ function App() {
     }
   };
 
+  const onClickToAdd = (item) => {
+    setCartItems((prev) => [...prev, item]);
+  };
+
   const fetchItems = async () => {
     let title = `*${searchQuery}*`;
 
@@ -57,32 +62,16 @@ function App() {
       "https://757ed0bbb74e1c15.mokky.dev/favorites"
     );
 
-    const favoritesItems = items.map((item) => {
-      const favorite = data.some((f) => f.itemId === item.itemId);
+    setFavorites(data);
+  };
 
-      if (favorite) {
-        return {
-          ...item,
-          isFavorite: true,
-        };
-      }
-
-      return {
-        ...item,
-      };
-    });
-
-    console.log(data)
-
-    // setItems([...favoritesItems]);
-    // setFavorites(data);
+  const fetchData = async () => {
+    await fetchItems();
+    await fetchFavorites();
   };
 
   useEffect(() => {
-    (async () => {
-      await fetchItems();
-      await fetchFavorites();
-    })();
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -91,7 +80,9 @@ function App() {
 
   return (
     <div className="max-w-5xl mx-auto bg-white rounded-3xl m-20">
-      {isDrawerOpen && <Drawer closeDrawer={closeDrawer} />}
+      {isDrawerOpen && (
+        <Drawer cartItems={cartItems} closeDrawer={closeDrawer} />
+      )}
 
       <Header openDrawer={openDrawer} />
 
@@ -109,7 +100,11 @@ function App() {
             />
           </div>
         </div>
-        <CardList items={items} onClickToFavorite={onClickToFavorite} />
+        <CardList
+          items={items}
+          onClickToAdd={onClickToAdd}
+          onClickToFavorite={onClickToFavorite}
+        />
       </div>
     </div>
   );

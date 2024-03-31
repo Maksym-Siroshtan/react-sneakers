@@ -1,6 +1,6 @@
 import CartItemList from "./CartItemList";
 
-function Drawer({ closeDrawer }) {
+function Drawer({ cartItems, closeDrawer }) {
   return (
     <>
       <div className="fixed left-0 top-0 w-full h-full bg-black opacity-40 z-10"></div>
@@ -15,7 +15,7 @@ function Drawer({ closeDrawer }) {
           />
         </div>
 
-        <CartItemList />
+        <CartItemList cartItems={cartItems} />
 
         <div>
           <div className="flex items-end gap-1 mb-5">

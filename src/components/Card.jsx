@@ -1,6 +1,13 @@
 import { useState } from "react";
 
-function Card({ itemId, title, imageUrl, price, onClickToFavorite }) {
+function Card({
+  itemId,
+  title,
+  imageUrl,
+  price,
+  onClickToFavorite,
+  onClickToAdd,
+}) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
 
@@ -10,8 +17,8 @@ function Card({ itemId, title, imageUrl, price, onClickToFavorite }) {
   };
 
   const onClickAdd = () => {
-    console.log("onClickAdd!");
     setIsAdded(!isAdded);
+    onClickToAdd({ itemId, title, imageUrl, price, isFavorite });
   };
   return (
     <li className="relative border border-gray-200 bg-white rounded-3xl p-7 hover:shadow-xl hover:scale-105 transition-all">

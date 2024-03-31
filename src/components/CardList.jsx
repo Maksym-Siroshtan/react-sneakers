@@ -7,6 +7,7 @@ function CardList(props) {
           key={item.itemId}
           {...item}
           onClickToFavorite={props.onClickToFavorite}
+          onClickToAdd={props.onClickToAdd}
         />
       ))}
     </ul>
