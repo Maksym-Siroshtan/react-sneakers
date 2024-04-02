@@ -1,3 +1,4 @@
+import InfoBlock from "./InfoBlock";
 import CartItemList from "./CartItemList";
 
 function Drawer({ cartItems, closeDrawer, onRemoveFromCart }) {
@@ -15,28 +16,40 @@ function Drawer({ cartItems, closeDrawer, onRemoveFromCart }) {
           />
         </div>
 
-        <CartItemList
-          cartItems={cartItems}
-          onRemoveFromCart={onRemoveFromCart}
-        />
-
-        <div>
-          <div className="flex items-end gap-1 mb-5">
-            <span>Разом:</span>
-            <div className="flex-1 border-b border-dashed border-gray-200"></div>
-            <b>10000 грн.</b>
+        {cartItems.length === 0 ? (
+          <div className="h-full flex flex-col justify-center">
+            <InfoBlock
+              title="Кошик порожній"
+              imageUrl="/package-icon.png"
+              description="Додайте хоча б одну пару кросівок, щоб зробити замовлення."
+            />
           </div>
-          <div className="flex items-end gap-1 mb-6">
-            <span>Податок 5%:</span>
-            <div className="flex-1 border-b border-dashed border-gray-200"></div>
-            <b>500 грн.</b>
-          </div>
+        ) : (
+          <>
+            <CartItemList
+              cartItems={cartItems}
+              onRemoveFromCart={onRemoveFromCart}
+            />
 
-          <button className="flex items-center justify-center gap-10 w-full text-white bg-lime-500 py-3 font-semibold rounded-2xl cursor-pointer transition hover:bg-lime-600 disabled:bg-gray-300 disabled:cursor-not-allowed">
-            Оформити замовлення
-            <img src="/arrow-next.svg" alt="Order" />
-          </button>
-        </div>
+            <div>
+              <div className="flex items-end gap-1 mb-5">
+                <span>Разом:</span>
+                <div className="flex-1 border-b border-dashed border-gray-200"></div>
+                <b>10000 грн.</b>
+              </div>
+              <div className="flex items-end gap-1 mb-6">
+                <span>Податок 5%:</span>
+                <div className="flex-1 border-b border-dashed border-gray-200"></div>
+                <b>500 грн.</b>
+              </div>
+
+              <button className="flex items-center justify-center gap-10 w-full text-white bg-lime-500 py-3 font-semibold rounded-2xl cursor-pointer transition hover:bg-lime-600 disabled:bg-gray-300 disabled:cursor-not-allowed">
+                Оформити замовлення
+                <img src="/arrow-next.svg" alt="Order" />
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </>
   );
