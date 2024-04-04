@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 
 import Header from "./components/Header";
@@ -134,6 +135,11 @@ function App() {
       )}
 
       <Header openDrawer={openDrawer} />
+
+      <Routes>
+        <Route path="/" element={<div>Home</div>} />
+        <Route path="/favorites" element={<div>Favorites</div>} />
+      </Routes>
 
       <div className="p-12">
         <div className="flex items-center justify-between mb-12">
