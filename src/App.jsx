@@ -54,11 +54,11 @@ function App() {
 
   const onRemoveFromCart = async (itemId) => {
     try {
+      setCartItems((prev) => prev.filter((item) => item.itemId !== itemId));
+
       await axios.delete(
         `https://757ed0bbb74e1c15.mokky.dev/cartItems/${itemId}`
       );
-
-      setCartItems((prev) => prev.filter((item) => item.itemId !== itemId));
     } catch (error) {
       console.log(error);
     }

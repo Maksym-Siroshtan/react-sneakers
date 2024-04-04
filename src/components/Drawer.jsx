@@ -19,6 +19,7 @@ function Drawer({ cartItems, closeDrawer, onRemoveFromCart }) {
         {cartItems.length === 0 ? (
           <div className="h-full flex flex-col justify-center">
             <InfoBlock
+              closeDrawer={closeDrawer}
               title="Кошик порожній"
               imageUrl="/package-icon.png"
               description="Додайте хоча б одну пару кросівок, щоб зробити замовлення."

@@ -1,4 +1,4 @@
-function InfoBlock({ title, imageUrl, description }) {
+function InfoBlock({ title, imageUrl, description, closeDrawer }) {
   return (
     <div className="flex flex-col items-center w-70">
       <img src={imageUrl} alt="Info-image" className="w-36" />
@@ -7,7 +7,10 @@ function InfoBlock({ title, imageUrl, description }) {
         {description}
       </p>
 
-      <button className="relative bg-lime-300 text-white w-full px-14 rounded-2xl text-lg py-4 hover:bg-lime-500 disabled:bg-slate-200">
+      <button
+        onClick={closeDrawer}
+        className="relative bg-lime-300 text-white w-full px-14 rounded-2xl text-lg py-4 hover:bg-lime-500 disabled:bg-slate-200"
+      >
         Повернутися на головну
         <img
           src="/arrow-next.svg"
