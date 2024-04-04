@@ -5,10 +5,11 @@ function Card({
   title,
   imageUrl,
   price,
+  favorited = false,
   onClickToFavorite,
   onClickToAdd,
 }) {
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(favorited);
   const [isAdded, setIsAdded] = useState(false);
 
   const onClickFavorite = () => {

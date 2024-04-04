@@ -26,15 +26,24 @@ function Home({ onClickToAdd, favorites, setFavorites }) {
 
   const onClickToFavorite = async (item) => {
     try {
-      if (!item.isFavorite) {
+      const isFavorite = favorites.find(
+        (favorite) => favorite.itemId === item.itemId
+      );
+
+      if (!isFavorite) {
         const { data } = await axios.post(
           "https://757ed0bbb74e1c15.mokky.dev/favorites",
           {
             ...item,
           }
         );
+
         setFavorites([...favorites, item]);
       } else {
+        setFavorites((previous) =>
+          previous.filter((prev) => prev.itemId !== item.itemId)
+        );
+
         await axios.delete(
           `https://757ed0bbb74e1c15.mokky.dev/favorites/${item.itemId}`
         );
