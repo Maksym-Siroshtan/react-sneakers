@@ -13,6 +13,9 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
+  const totalPrice = cartItems.reduce((sum, item) => sum + item.price, 0);
+  const vatPrice = Math.round((totalPrice * 5) / 100);
+
   const openDrawer = () => {
     setIsDrawerOpen(true);
   };
@@ -131,10 +134,12 @@ function App() {
           cartItems={cartItems}
           closeDrawer={closeDrawer}
           onRemoveFromCart={onRemoveFromCart}
+          totalPrice={totalPrice}
+          vatPrice={vatPrice}
         />
       )}
 
-      <Header openDrawer={openDrawer} />
+      <Header openDrawer={openDrawer} totalPrice={totalPrice} />
 
       <div className="p-12">
         <Routes>

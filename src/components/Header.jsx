@@ -1,8 +1,6 @@
-import { template } from "react";
-
 import { Link } from "react-router-dom";
 
-function Header({ openDrawer }) {
+function Header({ openDrawer, totalPrice }) {
   return (
     <header className="flex items-center justify-between p-12 border-b border-gray-200">
       <Link to={"/"}>
@@ -24,7 +22,9 @@ function Header({ openDrawer }) {
             className="flex gap-4 cursor-pointer hover:underline"
           >
             <img src="/cart.svg" alt="Cart" />
-            <b className="text-xs text-gray-500 hover:text-black">1205 грн.</b>
+            <b className="text-xs text-gray-500 hover:text-black">
+              {totalPrice} грн.
+            </b>
           </li>
           <li>
             <Link to={"/favorites"}>
