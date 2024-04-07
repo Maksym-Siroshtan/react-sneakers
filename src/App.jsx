@@ -23,11 +23,14 @@ function App() {
 
   const onAddToCart = async (item) => {
     try {
-      await axios.post("https://757ed0bbb74e1c15.mokky.dev/cartItems", {
-        ...item,
-      });
-
       setCartItems([...cartItems, item]);
+
+      const { data } = await axios.post(
+        "https://757ed0bbb74e1c15.mokky.dev/cartItems",
+        {
+          ...item,
+        }
+      );
     } catch (error) {
       console.log(error);
     }
@@ -45,8 +48,44 @@ function App() {
     }
   };
 
+  const onClickToFavorite = async (item) => {
+    try {
+      const isFavoriteItem = (item) =>
+        favorites.find((favorite) => favorite.itemId === item.itemId);
+
+      if (isFavoriteItem(item)) {
+        setFavorites((previous) =>
+          previous.filter((prev) => prev.itemId !== item.itemId)
+        );
+
+        await axios.delete(
+          `https://757ed0bbb74e1c15.mokky.dev/favorites/${
+            isFavoriteItem(item).favoriteId
+          }`
+        );
+      } else {
+        const { data } = await axios.post(
+          "https://757ed0bbb74e1c15.mokky.dev/favorites",
+          {
+            ...item,
+          }
+        );
+
+        item.favoriteId = data.id;
+
+        setFavorites([...favorites, item]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onClickToAdd = async (item) => {
-    onAddToCart(item);
+    if (cartItems.find((cartItem) => cartItem.itemId === item.itemId)) {
+      onRemoveFromCart(item.itemId);
+    } else {
+      onAddToCart(item);
+    }
   };
 
   const fetchCartItems = async () => {
@@ -61,8 +100,21 @@ function App() {
     }
   };
 
+  const fetchFavorites = async () => {
+    try {
+      const { data } = await axios.get(
+        "https://757ed0bbb74e1c15.mokky.dev/favorites"
+      );
+
+      setFavorites(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     (async () => {
+      await fetchFavorites();
       await fetchCartItems();
     })();
   }, []);
@@ -86,15 +138,18 @@ function App() {
             element={
               <Home
                 onClickToAdd={(item) => onClickToAdd(item)}
-                favorites={favorites}
-                setFavorites={setFavorites}
+                onClickToFavorite={(item) => onClickToFavorite(item)}
               />
             }
           />
           <Route
             path="/favorites"
             element={
-              <Favorites favorites={favorites} setFavorites={setFavorites} />
+              <Favorites
+                favorites={favorites}
+                setFavorites={setFavorites}
+                onClickToFavorite={(item) => onClickToFavorite(item)}
+              />
             }
           />
         </Routes>

@@ -1,34 +1,14 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 import CardList from "../components/CardList";
 
-function Favorites({ favorites, setFavorites }) {
+function Favorites({ favorites, onClickToFavorite }) {
   const favoritesMapping = favorites.map((favorite) => {
     return {
       ...favorite,
       favorited: true,
     };
   });
-
-  const fetchFavorites = async () => {
-    try {
-      const { data } = await axios.get(
-        "https://757ed0bbb74e1c15.mokky.dev/favorites"
-      );
-
-      setFavorites(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    (async () => {
-      await fetchFavorites();
-    })();
-  }, []);
 
   return (
     <>
@@ -44,7 +24,10 @@ function Favorites({ favorites, setFavorites }) {
         </Link>
         <h1 className="text-2xl font-bold">Обрані</h1>
       </div>
-      <CardList items={favoritesMapping} />
+      <CardList
+        items={favoritesMapping}
+        onClickToFavorite={onClickToFavorite}
+      />
     </>
   );
 }

@@ -3,7 +3,7 @@ import axios from "axios";
 
 import CardList from "../components/CardList";
 
-function Home({ onClickToAdd, favorites, setFavorites }) {
+function Home({ onClickToAdd, onClickToFavorite }) {
   const [items, setItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -19,35 +19,6 @@ function Home({ onClickToAdd, favorites, setFavorites }) {
       );
 
       setItems(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const onClickToFavorite = async (item) => {
-    try {
-      const isFavorite = favorites.find(
-        (favorite) => favorite.itemId === item.itemId
-      );
-
-      if (!isFavorite) {
-        const { data } = await axios.post(
-          "https://757ed0bbb74e1c15.mokky.dev/favorites",
-          {
-            ...item,
-          }
-        );
-
-        setFavorites([...favorites, item]);
-      } else {
-        setFavorites((previous) =>
-          previous.filter((prev) => prev.itemId !== item.itemId)
-        );
-
-        await axios.delete(
-          `https://757ed0bbb74e1c15.mokky.dev/favorites/${item.itemId}`
-        );
-      }
     } catch (error) {
       console.log(error);
     }
