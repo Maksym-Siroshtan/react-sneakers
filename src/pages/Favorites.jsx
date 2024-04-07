@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import CardList from "../components/CardList";
 
-function Favorites({ favorites, onClickToFavorite }) {
+function Favorites({ favorites, onClickToFavorite, onClickToAdd }) {
   const favoritesMapping = favorites.map((favorite) => {
     return {
       ...favorite,
@@ -27,6 +27,7 @@ function Favorites({ favorites, onClickToFavorite }) {
       <CardList
         items={favoritesMapping}
         onClickToFavorite={onClickToFavorite}
+        onClickToAdd={onClickToAdd}
       />
     </>
   );

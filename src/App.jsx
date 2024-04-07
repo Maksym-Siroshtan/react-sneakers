@@ -21,47 +21,19 @@ function App() {
     setIsDrawerOpen(false);
   };
 
-  const onAddToCart = async (item) => {
-    try {
-      setCartItems([...cartItems, item]);
-
-      const { data } = await axios.post(
-        "https://757ed0bbb74e1c15.mokky.dev/cartItems",
-        {
-          ...item,
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const onRemoveFromCart = async (itemId) => {
-    try {
-      setCartItems((prev) => prev.filter((item) => item.itemId !== itemId));
-
-      await axios.delete(
-        `https://757ed0bbb74e1c15.mokky.dev/cartItems/${itemId}`
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const onClickToFavorite = async (item) => {
     try {
-      const isFavoriteItem = (item) =>
-        favorites.find((favorite) => favorite.itemId === item.itemId);
+      const isFavoriteItem = favorites.find(
+        (favorite) => favorite.itemId === item.itemId
+      );
 
-      if (isFavoriteItem(item)) {
+      if (isFavoriteItem) {
         setFavorites((previous) =>
           previous.filter((prev) => prev.itemId !== item.itemId)
         );
 
         await axios.delete(
-          `https://757ed0bbb74e1c15.mokky.dev/favorites/${
-            isFavoriteItem(item).favoriteId
-          }`
+          `https://757ed0bbb74e1c15.mokky.dev/favorites/${isFavoriteItem.favoriteId}`
         );
       } else {
         const { data } = await axios.post(
@@ -80,23 +52,44 @@ function App() {
     }
   };
 
+  const onAddToCart = async (item) => {
+    try {
+      const { data } = await axios.post(
+        "https://757ed0bbb74e1c15.mokky.dev/cartItems",
+        {
+          ...item,
+        }
+      );
+
+      item.cartItemId = data.id;
+
+      setCartItems([...cartItems, item]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onRemoveFromCart = async (itemId) => {
+    try {
+      const isCartItem = cartItems.find(
+        (cartItem) => cartItem.itemId === itemId
+      );
+
+      setCartItems((prev) => prev.filter((item) => item.itemId !== itemId));
+
+      await axios.delete(
+        `https://757ed0bbb74e1c15.mokky.dev/cartItems/${isCartItem.cartItemId}`
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onClickToAdd = async (item) => {
     if (cartItems.find((cartItem) => cartItem.itemId === item.itemId)) {
       onRemoveFromCart(item.itemId);
     } else {
       onAddToCart(item);
-    }
-  };
-
-  const fetchCartItems = async () => {
-    try {
-      const { data } = await axios.get(
-        "https://757ed0bbb74e1c15.mokky.dev/cartItems"
-      );
-
-      setCartItems(data);
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -107,6 +100,18 @@ function App() {
       );
 
       setFavorites(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchCartItems = async () => {
+    try {
+      const { data } = await axios.get(
+        "https://757ed0bbb74e1c15.mokky.dev/cartItems"
+      );
+
+      setCartItems(data);
     } catch (error) {
       console.log(error);
     }
@@ -137,8 +142,8 @@ function App() {
             path="/"
             element={
               <Home
-                onClickToAdd={(item) => onClickToAdd(item)}
                 onClickToFavorite={(item) => onClickToFavorite(item)}
+                onClickToAdd={(item) => onClickToAdd(item)}
               />
             }
           />
@@ -149,6 +154,7 @@ function App() {
                 favorites={favorites}
                 setFavorites={setFavorites}
                 onClickToFavorite={(item) => onClickToFavorite(item)}
+                onClickToAdd={(item) => onClickToAdd(item)}
               />
             }
           />
