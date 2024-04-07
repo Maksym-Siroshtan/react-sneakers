@@ -3,7 +3,7 @@ import axios from "axios";
 
 import CardList from "../components/CardList";
 
-function Home({ onClickToAdd, onClickToFavorite }) {
+function Home({ favorites, onClickToAdd, onClickToFavorite }) {
   const [items, setItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -18,7 +18,22 @@ function Home({ onClickToAdd, onClickToFavorite }) {
         }
       );
 
-      setItems(data);
+      const items = data.map((item) => {
+        const favorite = favorites.some((fav) => fav.itemId === item.itemId);
+
+        if (favorite) {
+          return {
+            ...item,
+            favorited: true,
+          };
+        }
+
+        return {
+          ...item,
+        };
+      });
+
+      setItems(items);
     } catch (error) {
       console.log(error);
     }

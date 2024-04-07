@@ -147,6 +147,7 @@ function App() {
             path="/"
             element={
               <Home
+                favorites={favorites}
                 onClickToFavorite={(item) => onClickToFavorite(item)}
                 onClickToAdd={(item) => onClickToAdd(item)}
               />
