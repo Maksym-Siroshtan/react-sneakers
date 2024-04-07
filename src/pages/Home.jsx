@@ -3,7 +3,7 @@ import axios from "axios";
 
 import CardList from "../components/CardList";
 
-function Home({ favorites, onClickToAdd, onClickToFavorite }) {
+function Home({ favorites, cartItems, onClickToAdd, onClickToFavorite }) {
   const [items, setItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -19,18 +19,32 @@ function Home({ favorites, onClickToAdd, onClickToFavorite }) {
       );
 
       const items = data.map((item) => {
-        const favorite = favorites.some((fav) => fav.itemId === item.itemId);
+        const isFavorite = favorites.some((fav) => fav.itemId === item.itemId);
+        const isCartItemsCheked = cartItems.some(
+          (cartItem) => cartItem.itemId === item.itemId
+        );
 
-        if (favorite) {
+        if (isFavorite && isCartItemsCheked) {
+          return {
+            ...item,
+            favorited: true,
+            checked: true,
+          };
+        } else if (isFavorite) {
           return {
             ...item,
             favorited: true,
           };
+        } else if (isCartItemsCheked) {
+          return {
+            ...item,
+            checked: true,
+          };
+        } else {
+          return {
+            ...item,
+          };
         }
-
-        return {
-          ...item,
-        };
       });
 
       setItems(items);
@@ -46,7 +60,9 @@ function Home({ favorites, onClickToAdd, onClickToFavorite }) {
   }, []);
 
   useEffect(() => {
-    fetchItems();
+    (async () => {
+      await fetchItems();
+    })();
   }, [searchQuery]);
 
   return (

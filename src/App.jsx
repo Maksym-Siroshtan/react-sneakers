@@ -148,6 +148,7 @@ function App() {
             element={
               <Home
                 favorites={favorites}
+                cartItems={cartItems}
                 onClickToFavorite={(item) => onClickToFavorite(item)}
                 onClickToAdd={(item) => onClickToAdd(item)}
               />
@@ -158,7 +159,6 @@ function App() {
             element={
               <Favorites
                 favorites={favorites}
-                setFavorites={setFavorites}
                 onClickToFavorite={(item) => onClickToFavorite(item)}
                 onClickToAdd={(item) => onClickToAdd(item)}
               />

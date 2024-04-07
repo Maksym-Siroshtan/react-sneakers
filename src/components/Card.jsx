@@ -6,11 +6,12 @@ function Card({
   imageUrl,
   price,
   favorited = false,
+  checked = false,
   onClickToFavorite,
   onClickToAdd,
 }) {
   const [isFavorite, setIsFavorite] = useState(favorited);
-  const [isAdded, setIsAdded] = useState(false);
+  const [isAdded, setIsAdded] = useState(checked);
 
   const onClickFavorite = () => {
     setIsFavorite(!isFavorite);
