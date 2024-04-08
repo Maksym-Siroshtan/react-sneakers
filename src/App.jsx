@@ -13,6 +13,7 @@ function App() {
   const [favorites, setFavorites] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isOrderLoading, setIsOrderLoading] = useState(false);
 
   const totalPrice = cartItems.reduce((sum, item) => sum + item.price, 0);
   const vatPrice = Math.round((totalPrice * 5) / 100);
@@ -97,6 +98,29 @@ function App() {
     }
   };
 
+  const onClickToBuyOrder = async (order) => {
+    try {
+      setIsOrderLoading(true);
+
+      await axios.post("https://757ed0bbb74e1c15.mokky.dev/orders", {
+        order,
+        totalPrice,
+      });
+
+      cartItems.forEach(async (_, index) => {
+        await axios.delete(
+          `https://757ed0bbb74e1c15.mokky.dev/cartItems/${index + 1}`
+        );
+      });
+
+      setCartItems([]);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsOrderLoading(false);
+    }
+  };
+
   const fetchFavorites = async () => {
     try {
       const { data } = await axios.get(
@@ -137,6 +161,8 @@ function App() {
           onRemoveFromCart={onRemoveFromCart}
           totalPrice={totalPrice}
           vatPrice={vatPrice}
+          onClickToBuyOrder={onClickToBuyOrder}
+          isOrderLoading={isOrderLoading}
         />
       )}
 

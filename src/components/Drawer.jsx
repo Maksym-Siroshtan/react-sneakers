@@ -7,7 +7,12 @@ function Drawer({
   onRemoveFromCart,
   totalPrice,
   vatPrice,
+  onClickToBuyOrder,
+  isOrderLoading,
 }) {
+  const onCLickToOrderButton = () => {
+    onClickToBuyOrder(cartItems);
+  };
   return (
     <>
       <div className="fixed left-0 top-0 w-full h-full bg-black opacity-40 z-10"></div>
@@ -50,7 +55,11 @@ function Drawer({
                 <b>{vatPrice} грн.</b>
               </div>
 
-              <button className="flex items-center justify-center gap-10 w-full text-white bg-lime-500 py-3 font-semibold rounded-2xl cursor-pointer transition hover:bg-lime-600 disabled:bg-gray-300 disabled:cursor-not-allowed">
+              <button
+                onClick={onCLickToOrderButton}
+                disabled={isOrderLoading}
+                className="flex items-center justify-center gap-10 w-full text-white bg-lime-500 py-3 font-semibold rounded-2xl cursor-pointer transition hover:bg-lime-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
+              >
                 Оформити замовлення
                 <img src="/arrow-next.svg" alt="Order" />
               </button>
