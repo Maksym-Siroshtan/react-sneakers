@@ -36,12 +36,14 @@ function Header({ openDrawer, totalPrice }) {
               </template>
             </Link>
           </li>
-          <li className="flex gap-4 cursor-pointer hover:underline">
-            <img src="/profile.svg" alt="Profile" />
-            <span className="text-xs font-medium text-gray-500 hover:text-black">
-              Профіль
-            </span>
-          </li>
+          <Link to={"/orders"}>
+            <li className="flex gap-4 cursor-pointer hover:underline">
+              <img src="/profile.svg" alt="Profile" />
+              <span className="text-xs font-medium text-gray-500 hover:text-black">
+                Профіль
+              </span>
+            </li>
+          </Link>
         </ul>
       </nav>
     </header>
