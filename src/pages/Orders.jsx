@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 import CardList from "../components/CardList";
+import InfoBlock from "../components/InfoBlock";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
@@ -36,24 +37,34 @@ function Orders() {
 
   return (
     <>
-      <div className="flex items-center gap-4 mb-12">
-        <Link to="/">
-          <img
-            width={40}
-            height={35}
-            src="/arrow-right.svg"
-            alt="Arrow"
-            className="border p-4 rotate-180 rounded-xl cursor-pointer hover:-translate-x-0.5 transition-all"
-          />
-        </Link>
-        <div className="w-full flex items-center justify-between">
-          <h1 className="text-2xl font-bold">Мої покупки</h1>
-          <span>
-            Загальні витрати за весь час: <b>{totalSumOrders} грн.</b>
-          </span>
-        </div>
-      </div>
-      <CardList items={orders} />
+      {orders.length !== 0 ? (
+        <>
+          <div className="flex items-center gap-4 mb-12">
+            <Link to="/">
+              <img
+                width={40}
+                height={35}
+                src="/arrow-right.svg"
+                alt="Arrow"
+                className="border p-4 rotate-180 rounded-xl cursor-pointer hover:-translate-x-0.5 transition-all"
+              />
+            </Link>
+            <div className="w-full flex items-center justify-between">
+              <h1 className="text-2xl font-bold">Мої покупки</h1>
+              <span>
+                Загальні витрати за весь час: <b>{totalSumOrders} грн.</b>
+              </span>
+            </div>
+          </div>
+          <CardList items={orders} />
+        </>
+      ) : (
+        <InfoBlock
+          title="У вас немає замовлень."
+          description="Ви жебрак? Оформіть хоча б одне замовлення."
+          imageUrl="/emoji-2.png"
+        />
+      )}
     </>
   );
 }
