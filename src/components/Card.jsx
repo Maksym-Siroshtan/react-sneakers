@@ -24,12 +24,14 @@ function Card({
   };
   return (
     <li className="relative border border-gray-200 bg-white rounded-3xl p-7 hover:shadow-xl hover:scale-105 transition-all">
-      <img
-        onClick={onClickFavorite}
-        src={isFavorite ? "/like-2.svg" : "/like-1.svg"}
-        alt="Like"
-        className="absolute left-7 top-8 cursor-pointer"
-      />
+      {onClickToFavorite && (
+        <img
+          onClick={onClickFavorite}
+          src={isFavorite ? "/like-2.svg" : "/like-1.svg"}
+          alt="Like"
+          className="absolute left-7 top-8 cursor-pointer"
+        />
+      )}
       <img src={imageUrl} alt={title} className="w-36 mb-3.5" />
       <h4 className="text-sm font-medium mb-3.5">{title}</h4>
       <div className="flex items-center justify-between">
@@ -38,12 +40,14 @@ function Card({
           <b className="text-sm">{price} грн.</b>
         </div>
 
-        <img
-          onClick={onClickAdd}
-          src={isAdded ? "/checked.svg" : "/plus.svg"}
-          alt="Plus"
-          className="cursor-pointer"
-        />
+        {onClickToAdd && (
+          <img
+            onClick={onClickAdd}
+            src={isAdded ? "/checked.svg" : "/plus.svg"}
+            alt="Plus"
+            className="cursor-pointer"
+          />
+        )}
       </div>
     </li>
   );

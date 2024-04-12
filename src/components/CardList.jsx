@@ -6,8 +6,8 @@ function CardList({ items, onClickToFavorite, onClickToAdd }) {
         <Card
           key={item.itemId}
           {...item}
-          onClickToFavorite={onClickToFavorite}
-          onClickToAdd={onClickToAdd}
+          onClickToFavorite={onClickToFavorite ? onClickToFavorite : null}
+          onClickToAdd={onClickToAdd ? onClickToAdd : null}
         />
       ))}
     </ul>
