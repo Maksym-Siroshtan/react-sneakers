@@ -1,18 +1,68 @@
+import { useState } from "react";
+import axios from "axios";
+
 import InfoBlock from "./InfoBlock";
 import CartItemList from "./CartItemList";
 
 function Drawer({
   cartItems,
+  setCartItems,
   closeDrawer,
   onRemoveFromCart,
   totalPrice,
   vatPrice,
-  onClickToBuyOrder,
-  isOrderLoading,
 }) {
-  const onCLickToOrderButton = () => {
-    onClickToBuyOrder(cartItems);
+  const [isOrderLoading, setIsOrderLoading] = useState(false);
+
+  const onClickToBuyOrder = async (order) => {
+    try {
+      setIsOrderLoading(true);
+
+      await axios.post("https://757ed0bbb74e1c15.mokky.dev/orders", {
+        order,
+        totalPrice,
+      });
+
+      cartItems.forEach(async (_, index) => {
+        await axios.delete(
+          `https://757ed0bbb74e1c15.mokky.dev/cartItems/${index + 1}`
+        );
+      });
+
+      setCartItems([]);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsOrderLoading(false);
+    }
   };
+
+  const isOrderLoadingOrCartIsEmpty = () => {
+    if (isOrderLoading && cartItems.length !== 0) {
+      return (
+        <div className="h-full flex flex-col justify-center">
+          <InfoBlock
+            closeDrawer={closeDrawer}
+            title="Замовлення оформлено."
+            imageUrl="/order-success-icon.png"
+            description="Ваше замовлення незабаром буде передано кур'єрській доставці."
+          />
+        </div>
+      );
+    } else if (cartItems.length === 0) {
+      return (
+        <div className="h-full flex flex-col justify-center">
+          <InfoBlock
+            closeDrawer={closeDrawer}
+            title="Кошик порожній"
+            imageUrl="/package-icon.png"
+            description="Додайте хоча б одну пару кросівок, щоб зробити замовлення."
+          />
+        </div>
+      );
+    }
+  };
+
   return (
     <>
       <div className="fixed left-0 top-0 w-full h-full bg-black opacity-40 z-10"></div>
@@ -27,15 +77,8 @@ function Drawer({
           />
         </div>
 
-        {cartItems.length === 0 ? (
-          <div className="h-full flex flex-col justify-center">
-            <InfoBlock
-              closeDrawer={closeDrawer}
-              title="Кошик порожній"
-              imageUrl="/package-icon.png"
-              description="Додайте хоча б одну пару кросівок, щоб зробити замовлення."
-            />
-          </div>
+        {isOrderLoading || cartItems.length === 0 ? (
+          isOrderLoadingOrCartIsEmpty()
         ) : (
           <>
             <CartItemList
@@ -56,7 +99,7 @@ function Drawer({
               </div>
 
               <button
-                onClick={onCLickToOrderButton}
+                onClick={() => onClickToBuyOrder(cartItems)}
                 disabled={isOrderLoading}
                 className="flex items-center justify-center gap-10 w-full text-white bg-lime-500 py-3 font-semibold rounded-2xl cursor-pointer transition hover:bg-lime-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
               >
