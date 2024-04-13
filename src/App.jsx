@@ -133,15 +133,19 @@ function App() {
       {isDrawerOpen && (
         <Drawer
           cartItems={cartItems}
+          setCartItems={setCartItems}
           closeDrawer={closeDrawer}
           onRemoveFromCart={onRemoveFromCart}
           totalPrice={totalPrice}
           vatPrice={vatPrice}
-          setCartItems={setCartItems}
         />
       )}
 
-      <Header openDrawer={openDrawer} totalPrice={totalPrice} />
+      <Header
+        openDrawer={openDrawer}
+        favoritesLength={favorites.length}
+        totalPrice={totalPrice}
+      />
 
       <div className="p-12">
         <Routes>

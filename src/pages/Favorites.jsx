@@ -4,12 +4,10 @@ import CardList from "../components/CardList";
 import InfoBlock from "../components/InfoBlock";
 
 function Favorites({ favorites, onClickToFavorite, onClickToAdd }) {
-  const favoritesMapping = favorites.map((favorite) => {
-    return {
-      ...favorite,
-      favorited: true,
-    };
-  });
+  const favoritesMapping = favorites.map((favorite) => ({
+    ...favorite,
+    favorited: true,
+  }));
 
   return (
     <>

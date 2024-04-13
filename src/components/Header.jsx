@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function Header({ openDrawer, totalPrice }) {
+function Header({ openDrawer, favoritesLength, totalPrice }) {
   return (
     <header className="flex items-center justify-between p-12 border-b border-gray-200">
       <Link to={"/"}>
@@ -30,8 +30,8 @@ function Header({ openDrawer, totalPrice }) {
             <Link to={"/favorites"}>
               <template className="flex gap-4 cursor-pointer hover:underline">
                 <img src="/heart.svg" alt="Heart" />
-                <span className="text-xs font-medium  text-gray-500 hover:text-black">
-                  Обрані
+                <span className="flex gap-2 text-xs font-medium  text-gray-500 hover:text-black">
+                  Обрані <b className="text-red-500">{favoritesLength}</b>
                 </span>
               </template>
             </Link>
