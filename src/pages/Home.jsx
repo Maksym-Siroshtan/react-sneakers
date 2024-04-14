@@ -4,6 +4,7 @@ import axios from "axios";
 import CardList from "../components/CardList";
 
 function Home({ favorites, cartItems, onClickToAdd, onClickToFavorite }) {
+  const [isLoading, setIsLoading] = useState(true);
   const [items, setItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -47,6 +48,7 @@ function Home({ favorites, cartItems, onClickToAdd, onClickToFavorite }) {
         }
       });
 
+      setIsLoading(false);
       setItems(items);
     } catch (error) {
       console.log(error);
@@ -92,6 +94,7 @@ function Home({ favorites, cartItems, onClickToAdd, onClickToFavorite }) {
       </div>
       <CardList
         items={items}
+        isLoading={isLoading}
         onClickToAdd={onClickToAdd}
         onClickToFavorite={onClickToFavorite}
       />
