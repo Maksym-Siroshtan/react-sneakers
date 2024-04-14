@@ -1,7 +1,12 @@
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+
 import Card from "./Card";
+
 function CardList({ items, onClickToFavorite, onClickToAdd }) {
+  const [parent] = useAutoAnimate();
+
   return (
-    <ul className="grid grid-cols-4 gap-10">
+    <ul ref={parent} className="grid grid-cols-4 gap-10">
       {items.map((item) => (
         <Card
           key={item.itemId}
